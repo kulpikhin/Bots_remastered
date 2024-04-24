@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[RequireComponent (typeof (ManagmentWorkers))]
+[RequireComponent (typeof (WorkerDispatcher))]
 public class Base : MonoBehaviour
 {
     [SerializeField] private Worker _worker;
@@ -19,12 +19,12 @@ public class Base : MonoBehaviour
     private Worker _builder;
     private MineralDistrebutor _mineralDistrebutor;
 
-    public ManagmentWorkers WorkerManagment { get; private set; }
+    public WorkerDispatcher WorkerManagment { get; private set; }
 
     private void Awake()
     {
         _mineralDistrebutor = FindObjectOfType<MineralDistrebutor>();
-        WorkerManagment = GetComponent<ManagmentWorkers>();
+        WorkerManagment = GetComponent<WorkerDispatcher>();
     }
 
     private void Start()
@@ -52,11 +52,15 @@ public class Base : MonoBehaviour
         WorkerManagment.AddWorker(_builder);
     }
 
-    public void AddMineral(Worker worker)
+    public void GetMineral(Worker worker)
     {
-        _mineralsCount++;
-        WorkerManagment.AddWorker(worker);
+        _mineralsCount++;        
         SpendMineral();
+    }
+
+    public void GetInQueue(Worker worker)
+    {
+        WorkerManagment.AddWorker(worker);
     }
 
     private void Initializate()

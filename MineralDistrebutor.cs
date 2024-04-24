@@ -33,7 +33,7 @@ public class MineralDistrebutor : MonoBehaviour
                 curentBase = _bases[i];
                 mineral = _minerals[0];
 
-                if (curentBase.WorkerManagment.CheckFreeWorker())
+                if (curentBase.WorkerManagment.HasFreeWorker)
                 {
                     curentBase.WorkerManagment.SendMining(mineral);
                     _minerals.RemoveAt(0);

@@ -3,13 +3,7 @@ using UnityEngine;
 public class CameraMover : MonoBehaviour
 {
     [SerializeField] private float _speed;
-
-    private InputSystem _inputSystem;
-
-    private void Awake()
-    {
-        _inputSystem = FindObjectOfType<InputSystem>();
-    }
+    [SerializeField] private InputSystem _inputSystem;
 
     private void OnEnable()
     {

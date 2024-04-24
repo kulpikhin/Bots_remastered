@@ -15,10 +15,19 @@ public class WorkerMiner : MonoBehaviour
 
     public event UnityAction MineralPuted;
 
+    private void Awake()
+    {
+        _movement = GetComponent<WorkerMover>();        
+    }
+
     private void Start()
     {
         catchMineral = transform.GetChild(0);
-        _movement = GetComponent<WorkerMover>();
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        SelectAction(collider);
     }
 
     public void SetCurrentBase(Base curentBase)
@@ -31,11 +40,6 @@ public class WorkerMiner : MonoBehaviour
         _isMining = true;
         _mineralTarget = mineralTarget;
         _movement.StartMove(mineralTarget.transform.position);
-    }
-
-    private void OnTriggerEnter(Collider collider)
-    {
-        SelectAction(collider);
     }
 
     private void SelectAction(Collider collider)

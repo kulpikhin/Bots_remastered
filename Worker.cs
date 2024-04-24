@@ -17,13 +17,13 @@ public class Worker : MonoBehaviour
 
     private void OnEnable()
     {
-        _baseConstruction.ConstructionStarted += EndConstruct;
+        _baseConstruction.ConstructionEnd += EndConstruct;
         _workerMiner.MineralPuted += PutMineral;
     }
 
     private void OnDisable()
     {
-        _baseConstruction.ConstructionStarted -= EndConstruct;
+        _baseConstruction.ConstructionEnd -= EndConstruct;
         _workerMiner.MineralPuted -= PutMineral;
     }
 
@@ -52,6 +52,7 @@ public class Worker : MonoBehaviour
 
     private void PutMineral()
     {
-        _currentBase.AddMineral(this);
+        _currentBase.GetInQueue(this);
+        _currentBase.GetMineral(this);
     }
 }

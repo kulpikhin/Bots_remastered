@@ -11,18 +11,11 @@ public class BaseConstruction : MonoBehaviour
     private bool _isBuilding;
     private Flag _flag;
 
-    public event UnityAction<Base> ConstructionStarted;
+    public event UnityAction<Base> ConstructionEnd;
 
     private void Start()
     {
         _movement = GetComponent<WorkerMover>();
-    }
-
-    public void SendConstruct(Flag flag)
-    {
-        _flag = flag;
-        _isBuilding = true;
-        _movement.StartMove(_flag.transform.position);
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -37,13 +30,20 @@ public class BaseConstruction : MonoBehaviour
         }
     }
 
+    public void SendConstruct(Flag flag)
+    {
+        _flag = flag;
+        _isBuilding = true;
+        _movement.StartMove(_flag.transform.position);
+    }
+
     private void StartConstruct()
     {
         _isBuilding = false;
         _movement.StopMove();        
         Base newBase = Instantiate(_basePrefab, _flag.transform.position, Quaternion.identity);
         Destroy(_flag.gameObject);
-        ConstructionStarted?.Invoke(newBase);
+        ConstructionEnd?.Invoke(newBase);
         newBase.WorkerManagment.IdentifySecondBase();
     }
 }

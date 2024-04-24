@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ManagmentWorkers : MonoBehaviour
+public class WorkerDispatcher : MonoBehaviour
 {
     [SerializeField] private Worker _worker;
 
@@ -12,6 +12,7 @@ public class ManagmentWorkers : MonoBehaviour
     private Vector3 _lengthToSpawn;
     private bool _isFirstBase;
 
+    public bool HasFreeWorker { get { return _freeWorkers.Count > 0; } private set { } }
     public int WorkersCount { get; private set; }
 
     private void Awake()
@@ -34,11 +35,6 @@ public class ManagmentWorkers : MonoBehaviour
         worker.StartMining(mineral);
     }
 
-    public bool CheckFreeWorker()
-    {
-        return _freeWorkers.Count > 0;
-    }
-
     public void InitializateBase(Base currentBase)
     {
         _currentBase = currentBase;
@@ -59,6 +55,11 @@ public class ManagmentWorkers : MonoBehaviour
         WorkersCount++;
     }
 
+    public void IdentifySecondBase()
+    {
+        _isFirstBase = false;
+    }
+
     private void SetSpawnPosition()
     {
         _spawnPosition = _currentBase.transform.position + _lengthToSpawn;
@@ -74,11 +75,6 @@ public class ManagmentWorkers : MonoBehaviour
                 CreatWorker();
             }
         }
-    }
-
-    public void IdentifySecondBase()
-    {
-        _isFirstBase = false;
     }
 }
 
